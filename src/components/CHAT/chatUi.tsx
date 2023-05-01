@@ -22,7 +22,7 @@ export const ChatHome = () => {
 
     return (
         <div>
-            <div id="chat-container"className="border-solid border-2 border-red h-80 w-80 gap-3">
+            <div id="chat-container"className="border-solid border-2 border-red h-80 w-80 gap-3 bg-black">
                 {chatMessage.map((message)=>(<div key={message.id}>
                     <div className="flex justify-end">{message.message}</div>
                     <div className="flex justify-start">{message.response}</div>
