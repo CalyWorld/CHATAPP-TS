@@ -4,9 +4,9 @@ import { InputMessageContext } from "../context/inputContext";
 import { v4 as uuidv4 } from "uuid"
 export const HandleSubmit = () => {
 
-    const API_URL = "https://api.openai.com/v1/chat/completions ";
-    const API_KEY = `${process.env.REACT_APP_API_KEY}`;
-    // console.log(API_KEY);
+    const API_URL = "https://api.openai.com/v1/chat/completions";
+    const API_KEY = process.env.REACT_APP_API_KEY;
+    console.log(API_KEY);
 
     const { chatMessage, setChatMessage } = useContext(ChatMessageContext);
     const { input, setInput } = useContext(InputMessageContext);
