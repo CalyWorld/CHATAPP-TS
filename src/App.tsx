@@ -10,6 +10,7 @@ function App() {
   const [chatMessage, setChatMessage] = useState<ChatMessageCollection[]>([]);
   const [input, setInput] = useState<DefaultInput>({ message: "", id: "" });
 
+
   return (
     <div className="flex items-center justify-center h-screen">
       <InputMessageContext.Provider value={{input, setInput}}>
