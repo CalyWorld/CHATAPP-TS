@@ -1,12 +1,14 @@
 import { useContext } from "react";
 import { ChatMessageContext } from "../context/chatMessageContext";
 import { InputMessageContext } from "../context/inputContext";
-import { v4 as uuidv4 } from "uuid"
+import { v4 as uuidv4 } from "uuid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 export const HandleSubmit = () => {
 
     const API_URL = "https://api.openai.com/v1/chat/completions";
     const API_KEY = process.env.REACT_APP_API_KEY;
-    console.log(API_KEY);
+    // console.log(API_KEY);
 
     const { chatMessage, setChatMessage } = useContext(ChatMessageContext);
     const { input, setInput } = useContext(InputMessageContext);
@@ -28,7 +30,7 @@ export const HandleSubmit = () => {
             const data = await response.json();
             let responseMessage: string = data.choices[0].message.content;
             // setChatMessage([...chatMessage, {message:input.message}])
-            setChatMessage([...chatMessage, {message:input.message, response: responseMessage, id: uuidv4()}])
+            setChatMessage([...chatMessage, { message: input.message, response: responseMessage, id: uuidv4() }])
         } catch (err) {
             console.log("errors, check API KEY OR API LINK");
         }
@@ -41,7 +43,9 @@ export const HandleSubmit = () => {
 
     return (
         <div>
-            <button onClick={useHandleSendMessage}>send</button>
+            <button className="text-textColor p-1" onClick={useHandleSendMessage}>
+                <FontAwesomeIcon icon={faPaperPlane} />
+            </button>
         </div>
     )
 }

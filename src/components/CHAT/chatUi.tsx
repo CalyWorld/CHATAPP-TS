@@ -22,15 +22,17 @@ export const ChatHome = () => {
 
     return (
         <div>
-            <div id="chat-container"className="border-solid border-2 border-red h-80 w-80 gap-3 bg-black">
-                {chatMessage.map((message)=>(<div key={message.id}>
+            <div id="chat-container" className="flex flex-cols justify-around border-solid border-2 border-red h-80 w-80 gap-3 bg-backgroundColor text-textColor">
+                {chatMessage.map((message) => (<div key={message.id}>
                     <div className="flex justify-end">{message.message}</div>
                     <div className="flex justify-start">{message.response}</div>
                 </div>))}
             </div>
-            <div id="chat-message-container" className="flex justify-between">
-                <input type="text" name="message" placeholder="Message" value={input.message} onChange={(e) => { handleChange(e) }} />
-                <div className="flex justify-end"><HandleSubmit /></div>
+            <div id="chat-message-container">
+                <form className="flex justify-between">
+                    <input type="text" name="message" className="w-full bg-backgrounInput text-textColor p-1" placeholder="Message..." value={input.message} onChange={(e) => { handleChange(e) }} />
+                    <div className="flex justify-end"><HandleSubmit /></div>
+                </form>
             </div>
         </div>
     )
