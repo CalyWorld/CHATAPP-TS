@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid"
 export const HandleSubmit = () => {
 
     const API_URL = "https://api.openai.com/v1/chat/completions ";
-    const API_KEY = "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";
+    const API_KEY = process.env.REACT_APP_API_KEY
 
     const { chatMessage, setChatMessage } = useContext(ChatMessageContext);
     const { input, setInput } = useContext(InputMessageContext);
@@ -26,7 +26,8 @@ export const HandleSubmit = () => {
             });
             const data = await response.json();
             let responseMessage: string = data.choices[0].message.content;
-            setChatMessage([...chatMessage, { message: input.message, response: responseMessage, id: uuidv4()}])
+            // setChatMessage([...chatMessage, {message:input.message}])
+            setChatMessage([...chatMessage, {message:input.message, response: responseMessage, id: uuidv4()}])
         } catch (err) {
             console.log("errors, check API KEY OR API LINK");
         }
