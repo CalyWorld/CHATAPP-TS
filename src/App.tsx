@@ -1,24 +1,22 @@
 import './App.css';
 import { ChatHome } from './components/CHAT/chatUi';
-import { ChatMessageContext } from './components/context/apiContext';
 import { useState } from 'react';
-import { ChatMessageCollection, defaultChatMessage } from './components/context/apiContext';
-import { useApiKey } from './components/apiKey';
+import { DefaultInput } from './components/context/inputContext';
+import { ChatMessageCollection, ChatMessageContext } from './components/context/chatMessageContext';
+import { InputMessageContext } from './components/context/inputContext';
+
 function App() {
 
-  const [chatMessage, setChatMessage] = useState<ChatMessageCollection>(defaultChatMessage);
+  const [chatMessage, setChatMessage] = useState<ChatMessageCollection[]>([]);
+  const [input, setInput] = useState<DefaultInput>({ message: "", id: "" });
 
-  const API_URL = "https://api.openai.com/v1/chat/completions ";
-  const API_KEY = "sk - q1OKIn4bCzJ1f9Pmtyt9T3BlbkFJ1eNj6ydFEA6apmZQzsiy";
-
-  useApiKey(API_URL, API_KEY);
-
-  console.log(chatMessage);
   return (
-    <div className="App">
-      <ChatMessageContext.Provider value={{chatMessage, setChatMessage}}>
-      <ChatHome/>
+    <div className="flex items-center justify-center h-screen">
+      <InputMessageContext.Provider value={{input, setInput}}>
+      <ChatMessageContext.Provider value={{ chatMessage, setChatMessage }}>
+          <ChatHome />
       </ChatMessageContext.Provider>
+      </InputMessageContext.Provider>
     </div>
   );
 }
