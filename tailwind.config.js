@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     colors: {
       "backgroundColor": "#1f2937",
-      "textColor": "#f1f5f9",
+      "textColor": "#e2e8f0",
       "backgrounInput": "#374151"
     },
   },

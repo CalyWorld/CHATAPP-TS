@@ -7,43 +7,51 @@ import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 export const HandleSubmit = () => {
 
     const API_URL = "https://api.openai.com/v1/chat/completions";
-    const API_KEY = process.env.REACT_APP_API_KEY;
-    // console.log(API_KEY);
+    const config = {
+        API_KEY : `${process.env.REACT_APP_API_KEY}`
+    }
 
     const { chatMessage, setChatMessage } = useContext(ChatMessageContext);
     const { input, setInput } = useContext(InputMessageContext);
 
-
     const fetchMessage = async () => {
+        if (!input) {
+            console.error("Please enter a prompt");
+            return;
+        }
+
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${config.API_KEY}`,
+            },
+            body: JSON.stringify({
+                model: "gpt-3.5-turbo",
+                messages: [{ role: "user", content: input.message }],
+            }),
+        };
+
         try {
-            const response = await fetch(API_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${API_KEY}`,
-                },
-                body: JSON.stringify({
-                    model: "gpt-3.5-turbo",
-                    messages: [{ role: "user", content: input.message }],
-                }),
-            });
+            const response = await fetch(API_URL, options);
             const data = await response.json();
-            let responseMessage: string = data.choices[0].message.content;
-            // setChatMessage([...chatMessage, {message:input.message}])
-            setChatMessage([...chatMessage, { message: input.message, response: responseMessage, id: uuidv4() }])
+            setChatMessage([
+                ...chatMessage,
+                { message: input.message, response: data.choices[0].message.content, id: uuidv4() },
+            ]);
+            setInput({ message: "", id: "" });
         } catch (err) {
-            console.log("errors, check API KEY OR API LINK");
+            console.error("Error making API request:", err);
         }
     }
 
-    const useHandleSendMessage = () => {
+    const sendMessage = () => {
         fetchMessage();
-        setInput({ message: "", id: "" });
     }
 
     return (
         <div>
-            <button className="text-textColor p-1" onClick={useHandleSendMessage}>
+            <button className="text-textColor p-1" onClick={sendMessage}>
                 <FontAwesomeIcon icon={faPaperPlane} />
             </button>
         </div>
