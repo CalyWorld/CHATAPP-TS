@@ -1,10 +1,13 @@
 import { createContext } from "react";
 
-export interface FolderCollection{
-    message: string;
-    response:string;
-    id: string;
- }
+export interface FolderCollection {
+    id: string,
+    collection: {
+        message: string,
+        response: string,
+        id: string,
+    }[],
+}
 
 interface folderCollectionContextType {
     folder: FolderCollection[],
@@ -13,5 +16,5 @@ interface folderCollectionContextType {
 
 export const FolderCollectionContext = createContext<folderCollectionContextType>({
     folder: [],
-    setFolder: () =>{}
+    setFolder: () => { }
 });

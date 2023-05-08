@@ -1,16 +1,23 @@
 import React, { useContext } from "react";
 import { HandleSubmit } from "./CHAT/handleSubmit";
-import { InputMessageContext } from "./context/inputContext";
+import { HandleChange } from "./CHAT/handleChange";
+import { FolderCollectionContext } from "./context/folderCollectionContext";
 
-type CardProps = {
-        message:string,
-        response:string,
-        id:string
+export type CardProps = {
+    message: string,
+    response: string,
+    id: string
 }
 
-export const Card = ({message, response, id}: CardProps) => {
+export const Card = ({ message, response, id }: CardProps) => {
 
-    const {input} = useContext(InputMessageContext);
+    const {folder} = useContext(FolderCollectionContext);
+
+    if (folder.length > 0) {
+        const latestMessageObject = folder[folder.length - 1].id;
+        id = latestMessageObject;
+    }
+    console.log("outside-id", id);
 
     return (
         <div id="chat-container" key={id} className="border-solid border-2 w-96 h-96 bg-backgroundColor text-textColor mt-3">
@@ -23,8 +30,10 @@ export const Card = ({message, response, id}: CardProps) => {
                 </div>
             </div>
             <div id="chat-message-container" className="flex justify-between">
-                <input type="text" name="message" className="w-full bg-backgrounInput text-textColor p-1" placeholder="Message..." value={input.message}/>
-                <div className="flex justify-end"><HandleSubmit /></div>
+                <HandleChange />
+                <div className="flex justify-end">
+                    <HandleSubmit id = {id} />
+                </div>
             </div>
         </div>
     )
