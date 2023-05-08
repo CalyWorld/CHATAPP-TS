@@ -4,15 +4,17 @@ import { InputMessageContext } from "../context/inputContext";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
+import { FolderCollectionContext } from "../context/folderCollectionContext";
 export const HandleSubmit = () => {
 
     const API_URL = "https://api.openai.com/v1/chat/completions";
     const config = {
-        API_KEY : `${process.env.REACT_APP_API_KEY}`
+        API_KEY: `${process.env.REACT_APP_API_KEY}`
     }
 
     const { chatMessage, setChatMessage } = useContext(ChatMessageContext);
     const { input, setInput } = useContext(InputMessageContext);
+    const { folder, setFolder } = useContext(FolderCollectionContext)
 
     const fetchMessage = async () => {
         if (!input) {
@@ -39,7 +41,10 @@ export const HandleSubmit = () => {
                 ...chatMessage,
                 { message: input.message, response: data.choices[0].message.content, id: uuidv4() },
             ]);
+            setFolder([...folder, { message: input.message, response: data.choices[0].message.content, id: uuidv4() }]);
             setInput({ message: "", id: "" });
+            setChatMessage([]);
+
         } catch (err) {
             console.error("Error making API request:", err);
         }

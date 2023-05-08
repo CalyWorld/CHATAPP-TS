@@ -20,8 +20,8 @@ export const ChatHome = () => {
 
     return (
         <div>
-            <h1 className="text-textColor flex justify-center items-center border-solid border-2 ">Mini chatApp with openAPI</h1>
-            <div id="chat-container" className="border-solid border-2 w-96 h-full bg-backgroundColor text-textColor mt-3">
+            <h1 className="flex justify-center items-center border-solid border-2 ">Mini chatApp with openAPI</h1>
+            <div id="chat-container" className="border-solid border-2 w-96 h-96 bg-backgroundColor text-textColor mt-3">
                 {chatMessage.map((message) => (<div key={message.id}>
                     <div className="flex flex-col gap-3">
                         <div className="flex justify-end items-center border-2">
