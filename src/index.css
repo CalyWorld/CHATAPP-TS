@@ -3,7 +3,7 @@
 @tailwind utilities;
 *{
   box-sizing: border-box;
-  outline: 1px solid red
+  /* outline: 1px solid red */
 }
 
 body {
@@ -13,10 +13,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background-color: black; */
+  background-color: #030712;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#root{
+  height: 100%;
 }

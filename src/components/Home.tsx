@@ -8,15 +8,11 @@ import { Card } from "./card";
 export const Home = () => {
 
     const {folder} = useContext(FolderCollectionContext);
-
-    // const {chatMessage} = useContext(ChatMessageContext);
  
 
 
     return (
-        <div>
-            <h1 className="flex justify-center items-center border-solid border-2 ">ChatGPT 2.0 with openAPI</h1>
-            <div className="flex justify-center gap-3">
+            <div className="flex justify-center gap-3 h-screen">
                 <Router>
                     <SideNavBar />
                     <Routes>
@@ -27,6 +23,5 @@ export const Home = () => {
                     </Routes>
                 </Router>
             </div>
-        </div>
     )
 }

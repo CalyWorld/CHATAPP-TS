@@ -5,7 +5,9 @@ module.exports = {
     colors: {
       "backgroundColor": "#1f2937",
       "textColor": "#e2e8f0",
-      "backgrounInput": "#374151"
+      "backgrounInput": "#374151",
+      "navBackgroundColor":"#030712",
+     "borderBottom": "#475569"
     },
   },
   plugins: [],

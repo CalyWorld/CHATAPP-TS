@@ -3,6 +3,7 @@ import { ChatMessageContext } from "../context/chatMessageContext"
 import { HandleSubmit } from "./handleSubmit";
 import { HandleChange } from "./handleChange";
 import { FolderCollectionContext } from "../context/folderCollectionContext";
+import { Footer } from "../footer";
 
 
 export const ChatHome = () => {
@@ -11,13 +12,14 @@ export const ChatHome = () => {
 
     const { folder } = useContext(FolderCollectionContext);
 
-    // console.log("message", chatMessage);
-
     console.log("folder", folder);
 
     return (
-        <div>
-            <div id="chat-container" className="border-solid border-2 w-96 h-96 bg-backgroundColor text-textColor mt-3">
+        <div id="chat-container" className="bg-backgroundColor text-textColor w-screen flex flex-col justify-around items-center">
+            <div className="rendered-chat-messages">
+               <div className="chat-container-title">
+               <h1 className="items-center border-solid border-2">ChatGPT 2.0 with openAPI</h1>
+               </div>
                 {chatMessage.map((message) => (
                     <div key={message.id}>
                         <div className="flex flex-col gap-3">
@@ -30,11 +32,12 @@ export const ChatHome = () => {
                         </div>
                     </div>))}
             </div>
-            <div id="chat-message-container" className="flex justify-between">
+            <div>
+            <div id="chat-message-container" className="flex justify-center item-center w-96 mb-8 gap-5">
                 <HandleChange />
-                <div className="flex justify-end">
-                    <HandleSubmit />
-                </div>
+                <HandleSubmit />
+            </div>
+            <Footer/>
             </div>
         </div>
     )

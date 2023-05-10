@@ -13,7 +13,7 @@ function App() {
   const [folder, setFolder] = useState<FolderCollection[]>([]);
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className=''>
         <InputMessageContext.Provider value={{ input, setInput }}>
           <ChatMessageContext.Provider value={{ chatMessage, setChatMessage }}>
             <FolderCollectionContext.Provider value={{folder, setFolder}}>
