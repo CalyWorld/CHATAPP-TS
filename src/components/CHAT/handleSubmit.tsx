@@ -7,7 +7,7 @@ import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { FolderCollectionContext } from "../context/folderCollectionContext";
 
 type HandleSubmitProps = {
-    id: string
+    id?: string
 }
 
 export const HandleSubmit = ({ id }: HandleSubmitProps) => {
@@ -47,17 +47,19 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
         try {
             const response = await fetch(API_URL, options);
             const data = await response.json();
-            let messageId = uuidv4();
             const newCollection = { message: input.message, response: data.choices[0].message.content, id: uuidv4() };
             setChatMessage([...chatMessage, newCollection]);
-            console.log("current-id", id);
-            setFolder([...folder, { id: uuidv4(), collection:[ { message: input.message, response: data.choices[0].message.content, id: uuidv4() }] }]);
-            setFolder((folder) => folder.map((collections) => collections.id === id ? { ...collections, id: messageId, collection: [...collections.collection, { message: input.message, response: data.choices[0].message.content, id: uuidv4() }] } : collections));
+            console.log(id);
+            let newMessageId = uuidv4()
+            // setFolder([...folder, { id: uuidv4(), collection: [{ message: input.message, response: data.choices[0].message.content, id: newMessageId }] }]);
+
+            setFolder((folder)=> folder.map((collections)=> collections.id === id ?{...collections, id: newMessageId, collection:[...collections.collection, {message:input.message, response: data.choices[0].message.content, id: newMessageId }]}:collections));
+            // setFolder((folder) => folder.map((collections) => collections.id === id ? { ...collections, id: newMessageId, collection: [...collections.collection, { message: input.message, response: data.choices[0].message.content, id: uuidv4() }] } : collections));
 
             // const newCollection = { message: input.message, response: data.choices[0].message.content, id: uuidv4() };
             // setChatMessage([...chatMessage, newCollection]);
             // console.log("current-id", id);
-            
+
             // let collectionExists = false;
             // setFolder(folder.map((collections) => {
             //   if (collections.id === id) {
@@ -67,7 +69,7 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
             //     return collections;
             //   }
             // }));
-            
+
             // if (!collectionExists) {
             //   setFolder([...folder, { id: uuidv4(), collection: [newCollection] }]);
             // }
