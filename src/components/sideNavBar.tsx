@@ -14,13 +14,11 @@ export const SideNavBar = () => {
                 </Link>
             </div>
             <div className="saved-chat-container">
-                {folder.map((collections) => collections.collection.map((collection) =>
-                    <div key={collection.id} className="flex flex-cols justify-center">
-                        <Link to={`/${collection.message}/`}>
-                            <h2>{collection.message}</h2>
-                        </Link>
+                {folder.map((collections) => 
+                    <div key={collections.id} className="flex flex-cols justify-center">
+                      <Link to={`/${collections.message}/`}>{collections.message}</Link>
                     </div>
-                ))}
+                )}
             </div>
         </div>
     )

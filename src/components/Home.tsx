@@ -9,7 +9,8 @@ export const Home = () => {
 
     const {folder} = useContext(FolderCollectionContext);
 
-    console.log(folder);
+    // const {chatMessage} = useContext(ChatMessageContext);
+ 
 
 
     return (
@@ -20,8 +21,9 @@ export const Home = () => {
                     <SideNavBar />
                     <Routes>
                         <Route path='/' element={<ChatHome/>}></Route>
-                        {folder.map((collections) => collections.collection.map((collection) =>
-                            <Route key={collection.id} path={`/${collection.message}/`} element={<Card message={collection.message} response={collection.response} id={collection.id} />}></Route>))}
+                            {folder.map((collections)=>
+                            <Route key={collections.id} path={`/${collections.message}/`} element={<Card id={collections.id} collections={collections.collection}/>}></Route>
+                            )}
                     </Routes>
                 </Router>
             </div>
