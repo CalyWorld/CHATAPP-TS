@@ -7,7 +7,9 @@ module.exports = {
       "textColor": "#e2e8f0",
       "backgrounInput": "#374151",
       "navBackgroundColor":"#030712",
-     "borderBottom": "#475569"
+     "borderBottom": "#475569",
+     "inputColor":"#020617",
+     "formbackground":"#f8fafc"
     },
   },
   plugins: [],
