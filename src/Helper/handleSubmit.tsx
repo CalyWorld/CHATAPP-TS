@@ -1,11 +1,12 @@
-import { useContext} from "react";
-import { ChatMessageCollection, ChatMessageContext } from "../context/chatMessageContext";
+import { useContext } from "react";
+import { ChatMessageCollection } from "../context/chatMessageContext";
 import { InputMessageContext } from "../context/inputContext";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { FolderCollectionContext } from "../context/folderCollectionContext";
-import {DefaultInput} from "../context/inputContext";
+import { DefaultInput } from "../context/inputContext";
+import { LoadingContext } from "../context/loaderContext";
 type HandleSubmitProps = {
     id?: string
 }
@@ -17,15 +18,21 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
         API_KEY: `${process.env.REACT_APP_API_KEY}`
     }
 
-    const { chatMessage, setChatMessage } = useContext(ChatMessageContext);
     const { input, setInput } = useContext(InputMessageContext);
-    const { folder, setFolder } = useContext(FolderCollectionContext)
+    const { folder, setFolder } = useContext(FolderCollectionContext);
+    const { setLoading } = useContext(LoadingContext);
+
 
     const fetchMessage = async () => {
         if (!input) {
             console.error("Please enter a prompt");
             return;
         }
+
+        setLoading(true);
+        let newCollection = { message: input.message, response: "", id: uuidv4()};
+        addNewChat(newCollection, input);
+        setInput({ message: "", id: uuidv4() });
 
         const options = {
             method: "POST",
@@ -40,13 +47,11 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
         };
 
         try {
+
             const response = await fetch(API_URL, options);
             const data = await response.json();
-            const newCollection = { message: input.message, response: data.choices[0].message.content, id: uuidv4() };
-            setChatMessage([...chatMessage, newCollection]);
-            addNewChat(newCollection, input)
-            setInput({ message: "", id: uuidv4() });
-            setChatMessage([]);
+            newCollection.response = data.choices[0].message.content;
+            setLoading(false);
 
         } catch (err) {
             console.error("Error making API request:", err);
@@ -57,14 +62,14 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
         fetchMessage();
     }
 
-    const addNewChat  = (newCollection:ChatMessageCollection, input:DefaultInput) =>{
-        const index = folder.findIndex((item)=> item.id === id);
-        if(index === -1){
-            //if the collection is not in the array, create a new one
-            setFolder((folder)=> [...folder, {id: uuidv4(), message: input.message, collection: [newCollection]}]);
-        }else{
-            //if it is, move the collection to collection array that matches with the id
-            setFolder((folder)=> folder.map((collections)=> collections.id === id ? {...collections, collection:[...collections.collection, newCollection]}:collections));
+    const addNewChat = (newCollection: ChatMessageCollection, input: DefaultInput) => {
+        const index = folder.findIndex((item) => item.id === id);
+        if (index === -1) {
+            //if the chatMessage is not in the collection object array, create a new one
+            setFolder((folder) => [...folder, { id: uuidv4(), message: input.message, currentId: "",  collection: [newCollection] }]);
+        } else {
+            //if it is, move the chatMessages to collection array that matches with the id
+            setFolder((folder) => folder.map((collections) => collections.id === id ? { ...collections, collection: [...collections.collection, newCollection] } : collections));
         }
     }
 

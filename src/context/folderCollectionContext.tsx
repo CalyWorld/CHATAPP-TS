@@ -3,6 +3,7 @@ import { createContext } from "react";
 export interface FolderCollection {
     id: string,
     message: string,
+    currentId:string,
     collection: {
         message: string,
         response: string,
