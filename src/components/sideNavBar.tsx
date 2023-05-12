@@ -44,7 +44,7 @@ export const SideNavBar = () => {
                 </div>
             </div>
             <div className="relative flex justify-center items-center">
-                {openDropDown && <DropDown />}
+                {openDropDown && <DropDown setDropDown={setDropDown} />}
                 <button onClick={() => { setDropDown(true) }}>
                     <div className="user-container flex justify-center gap-2 p-2" key={user.id}>
                         <div>

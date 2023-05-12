@@ -11,7 +11,8 @@ module.exports = {
      "inputColor":"#020617",
      "formbackground":"#f8fafc",
      "dropdownBackground": "#0f172a",
-     "dropdownTextBackground":"#334155"
+     "dropdownTextBackground":"#334155",
+     "buttonBaground": "#334155"
     },
   },
   plugins: [],

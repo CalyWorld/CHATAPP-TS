@@ -5,7 +5,7 @@ import { UserInfoContext } from "../context/userInfoContext";
 
 export const SignIn = () => {
 
-  const {setUser } = useContext(UserInfoContext);
+  const { setUser } = useContext(UserInfoContext);
 
   const handleSignIn = async () => {
 
@@ -30,7 +30,7 @@ export const SignIn = () => {
   }, [setUser])
 
   return (
-    <div className="sign-in">
+    <div className="sign-in bg-buttonBaground p-2">
       <button onClick={handleSignIn}>Sign in</button>
     </div>
   );

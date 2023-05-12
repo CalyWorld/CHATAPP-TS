@@ -16,12 +16,12 @@ interface SignUpProps {
     setAction: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const SignUp = ({setAction}:SignUpProps) => {
+export const SignUp = ({ setAction }: SignUpProps) => {
 
     const { register, handleSubmit, watch, formState: { errors }, } = useForm<SignUpFormData>();
     const [signUpErrors, setSignUpError] = useState<string | null>(null);
     const { setUser } = useContext(UserInfoContext);
-  
+
 
     const handleSignUp = async (data: SignUpFormData) => {
 
@@ -44,7 +44,7 @@ export const SignUp = ({setAction}:SignUpProps) => {
             <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col justify-between p-3 h-96">
                 <div className="flex flex-col gap-5">
                     <div className="flex justify-end">
-                        <button type="button" onClick={()=>{setAction(false)}}><FontAwesomeIcon icon={faXmark}/></button>
+                        <button type="button" onClick={() => { setAction(false) }}><FontAwesomeIcon icon={faXmark} /></button>
                     </div>
                     <label className="flex gap-5"> Email:
                         <input className="inputColor" type="text" {...register("email", { required: true, pattern: /^\S+@\S+$/i })} placeholder="Enter email" />
