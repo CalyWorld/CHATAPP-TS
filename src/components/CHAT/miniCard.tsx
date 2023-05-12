@@ -9,7 +9,7 @@ export const MiniCard = ({ collection }: MiniCardProps) => {
 
     const { loading } = useContext(LoadingContext);
 
-    console.log("current-collection", collection);
+    // console.log("current-collection", collection);
 
     return (
         <div key={collection.id}>
@@ -19,7 +19,7 @@ export const MiniCard = ({ collection }: MiniCardProps) => {
                 </div>
                 <div className="flex flex-col justify-start">
                     <p className="border-solid border-1 p-3">
-                        {loading ? "Loading..." : collection.response}
+                        {collection.response}
                     </p>
                 </div>
             </div>

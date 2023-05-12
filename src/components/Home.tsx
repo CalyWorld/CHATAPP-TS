@@ -10,22 +10,16 @@ export const Home = () => {
     const { folder } = useContext(FolderCollectionContext);
 
     return (
-        <div className="flex justify-center gap-3 h-screen">
-            <Router>
+        <Router>
+            <div className="flex justify-center gap-3 h-screen">
                 <SideNavBar />
                 <Routes>
-                    <Route path='/' element={<ChatHome />}></Route>
-                    {folder.map((collections) =>
-                        <Route
-                            key={collections.id}
-                            path={`/${collections.message}/`}
-                            element={
-                                <Card id={collections.id} collections={collections.collection.map((collection) => ({ ...collection, currentId: collections.id }))} />
-                            }>
-                        </Route>
-                    )}
+                    <Route path="/" element={<ChatHome />}></Route>
+                    {folder.map((collections) => (
+                       <Route key={collections.id} path= {`/${collections.message}`} element= <Card id={collections.id} collections={collections.collection}/>></Route>
+                    ))}
                 </Routes>
-            </Router>
-        </div>
+            </div>
+        </Router>
     )
 }

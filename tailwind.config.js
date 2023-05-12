@@ -9,7 +9,9 @@ module.exports = {
       "navBackgroundColor":"#030712",
      "borderBottom": "#475569",
      "inputColor":"#020617",
-     "formbackground":"#f8fafc"
+     "formbackground":"#f8fafc",
+     "dropdownBackground": "#0f172a",
+     "dropdownTextBackground":"#334155"
     },
   },
   plugins: [],

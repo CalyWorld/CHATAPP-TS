@@ -9,7 +9,7 @@ export const HomePage = () => {
     const { user } = useContext(UserInfoContext);
     const [action, setAction] = useState<boolean>(false);
 
-    console.log("user", user);
+    // console.log("user", user);
 
     if(action){
         return <div className="flex h-screen justify-center items-center"><SignUp setAction={setAction}/></div>
@@ -23,7 +23,6 @@ export const HomePage = () => {
                     <button onClick={()=>{setAction(true)}}>Sign Up</button>
                 </div>
                 }
-                
         </div>
     )
 }

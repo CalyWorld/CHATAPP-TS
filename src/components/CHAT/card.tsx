@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { HandleSubmit } from "../../Helper/handleSubmit";
 import { HandleChange } from "../../Helper/handleChange";
-import { FolderCollectionContext } from "../../context/folderCollectionContext";
 import { Footer } from "../footer";
 import { MiniCard } from "./miniCard";
 
@@ -11,11 +10,6 @@ export type CardProps = {
 }
 
 export const Card = ({ collections, id }: CardProps) => {
-
-    const { folder } = useContext(FolderCollectionContext);
-
-    console.log("folder", folder);
-    console.log("collections", collections);
 
     return (
         <div id="chat-container" className="w-screen h-screen bg-backgroundColor text-textColor flex flex-col justify-between overflow-y-scroll">
