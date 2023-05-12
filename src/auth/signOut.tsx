@@ -11,7 +11,6 @@ export const SignOut = () => {
         try {
             await auth.signOut();
             setUser({ email: "", img: "", id: "" });
-            localStorage.removeItem("userInfo");
         } catch (error) {
             console.log(error);
         }

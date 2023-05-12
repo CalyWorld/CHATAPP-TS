@@ -13,6 +13,7 @@ export const SideNavBar = () => {
     const { user } = useContext(UserInfoContext);
     const [openDropDown, setDropDown] = useState<boolean>(false);
 
+
     console.log(folder);
 
     return (
@@ -28,7 +29,7 @@ export const SideNavBar = () => {
                 <div className="saved-chat-container p-2 flex flex-col justify-center gap-5">
                     {folder.map((collections) =>
                         <div key={collections.id}>
-                            <Link to={`/${collections.message}/`}>
+                            <Link to={`/${collections.message}`}>
                                 <div className="main-container flex p-2 justify-around items-center">
                                     <div className="chat-name-container">
                                         <p>{collections.message}</p>

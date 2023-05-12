@@ -6,6 +6,6 @@ interface loadingContextType {
 }
 
 export const LoadingContext = createContext<loadingContextType>({
-    loading: false,
+    loading: true || false,
     setLoading: () =>{}
 });

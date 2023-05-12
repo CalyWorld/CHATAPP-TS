@@ -3,13 +3,12 @@ import { ChatMessageCollection } from "../../context/chatMessageContext"
 import { LoadingContext } from "../../context/loaderContext";
 type MiniCardProps = {
     collection: ChatMessageCollection,
+    currentId: string
 }
 
-export const MiniCard = ({ collection }: MiniCardProps) => {
+export const MiniCard = ({ collection, currentId }: MiniCardProps) => {
 
     const { loading } = useContext(LoadingContext);
-
-    // console.log("current-collection", collection);
 
     return (
         <div key={collection.id}>
@@ -19,7 +18,7 @@ export const MiniCard = ({ collection }: MiniCardProps) => {
                 </div>
                 <div className="flex flex-col justify-start">
                     <p className="border-solid border-1 p-3">
-                        {collection.response}
+                        {currentId === collection.id && !loading ? "..." : collection.response}
                     </p>
                 </div>
             </div>

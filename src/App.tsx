@@ -5,7 +5,7 @@ import { ChatMessageCollection, ChatMessageContext } from './context/chatMessage
 import { InputMessageContext } from './context/inputContext';
 import { FolderCollection, FolderCollectionContext } from './context/folderCollectionContext';
 import { LoadingContext } from './context/loaderContext';
-import { HomePage } from './components/homePage';
+import { LoginPage } from './components/loginPage';
 import { UserInfoCollection, UserInfoContext } from './context/userInfoContext';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
   const [chatMessage, setChatMessage] = useState<ChatMessageCollection[]>([]);
   const [input, setInput] = useState<DefaultInput>({ message: "", id: "" });
   const [folder, setFolder] = useState<FolderCollection[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [user, setUser] = useState<UserInfoCollection>({email:"", img:"", id:""})
 
   console.log(user);
@@ -25,7 +25,7 @@ function App() {
           <ChatMessageContext.Provider value={{ chatMessage, setChatMessage }}>
             <LoadingContext.Provider value={{loading, setLoading}}>
             <FolderCollectionContext.Provider value={{folder, setFolder}}>
-              <HomePage/>
+              <LoginPage/>
             </FolderCollectionContext.Provider>
             </LoadingContext.Provider>
           </ChatMessageContext.Provider>

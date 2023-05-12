@@ -6,7 +6,7 @@ export interface UserInfoCollection {
     id: string;
 }
 
-interface userContextType {
+export interface userContextType {
     user: UserInfoCollection,
     setUser: React.Dispatch<React.SetStateAction<UserInfoCollection>>
 }

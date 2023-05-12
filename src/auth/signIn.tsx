@@ -1,8 +1,8 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import auth from "../firebase";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { UserInfoContext } from "../context/userInfoContext";
-
+import Cookies from "js-cookie";
 export const SignIn = () => {
 
   const { setUser } = useContext(UserInfoContext);
@@ -13,21 +13,18 @@ export const SignIn = () => {
       const provider = new GoogleAuthProvider();
       const userCredentials = await signInWithPopup(auth, provider);
       const user = userCredentials.user;
-      const userInfo = { email: user.email, img: user.photoURL, id: user.uid }
+      const userInfo = { email: user.email, img: user.photoURL, id: user.uid };
+      Cookies.set("userInfo", JSON.stringify({
+        email: userInfo.email,
+        img: userInfo.img?.toString(),
+        id: userInfo.id
+      }), { expires: 29 });
       setUser(userInfo);
-      localStorage.setItem("userInfo", JSON.stringify(userInfo));
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-
-    const userInfo = JSON.parse(localStorage.getItem("userInfo") || "null");
-    if (userInfo) {
-      setUser(userInfo);
-    }
-  }, [setUser])
 
   return (
     <div className="sign-in bg-buttonBaground p-2">

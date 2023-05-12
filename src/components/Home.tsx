@@ -8,16 +8,17 @@ import { Card } from "./CHAT/card";
 export const Home = () => {
 
     const { folder } = useContext(FolderCollectionContext);
+    console.log(folder);
 
     return (
         <Router>
-            <div className="flex justify-center gap-3 h-screen">
+           <div className="flex justify-center gap-3 h-screen">
                 <SideNavBar />
                 <Routes>
-                    <Route path="/" element={<ChatHome />}></Route>
                     {folder.map((collections) => (
-                       <Route key={collections.id} path= {`/${collections.message}`} element= <Card id={collections.id} collections={collections.collection}/>></Route>
+                        <Route key={collections.id} path={`/${collections.message}`} element=<Card id={collections.id} collections={collections.collection} />></Route>
                     ))}
+                    <Route path="/" element={<ChatHome/>}></Route>
                 </Routes>
             </div>
         </Router>

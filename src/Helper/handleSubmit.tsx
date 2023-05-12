@@ -7,6 +7,7 @@ import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { FolderCollectionContext } from "../context/folderCollectionContext";
 import { DefaultInput } from "../context/inputContext";
 import { LoadingContext } from "../context/loaderContext";
+import { useNavigate } from "react-router-dom";
 type HandleSubmitProps = {
     id?: string
 }
@@ -20,7 +21,9 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
 
     const { input, setInput } = useContext(InputMessageContext);
     const { folder, setFolder } = useContext(FolderCollectionContext);
-    const { setLoading } = useContext(LoadingContext);
+    const { loading, setLoading } = useContext(LoadingContext);
+
+    const navigate = useNavigate();
 
 
     const fetchMessage = async () => {
@@ -29,8 +32,8 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
             return;
         }
 
-        setLoading(true);
-        let newCollection = { message: input.message, response: "", id: uuidv4()};
+        setLoading(false);
+        let newCollection = { message: input.message, response: "", id: uuidv4() };
         addNewChat(newCollection, input);
         setInput({ message: "", id: uuidv4() });
 
@@ -51,7 +54,7 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
             const response = await fetch(API_URL, options);
             const data = await response.json();
             newCollection.response = data.choices[0].message.content;
-            setLoading(false);
+            setLoading(true);
 
         } catch (err) {
             console.error("Error making API request:", err);
@@ -66,7 +69,8 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
         const index = folder.findIndex((item) => item.id === id);
         if (index === -1) {
             //if the chatMessage is not in the collection object array, create a new one
-            setFolder((folder) => [...folder, { id: uuidv4(), message: input.message, currentId: "",  collection: [newCollection] }]);
+            setFolder((folder) => [...folder, { id: uuidv4(), message: input.message, currentId: "", collection: [newCollection] }]);
+            navigate(`/${input.message}`);
         } else {
             //if it is, move the chatMessages to collection array that matches with the id
             setFolder((folder) => folder.map((collections) => collections.id === id ? { ...collections, collection: [...collections.collection, newCollection] } : collections));
@@ -75,9 +79,9 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
 
     return (
         <div>
-            <button className="text-textColor p-1" onClick={sendMessage}>
+            {!loading ? "..." : <button className="text-textColor p-1" onClick={sendMessage}>
                 <FontAwesomeIcon icon={faPaperPlane} />
-            </button>
+            </button>}
         </div>
     )
 }
