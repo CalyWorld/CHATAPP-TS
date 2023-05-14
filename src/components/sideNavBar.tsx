@@ -44,18 +44,18 @@ export const SideNavBar = () => {
                     )}
                 </div>
             </div>
-            <div className="relative flex justify-center items-center">
+            <div className="profile-container relative flex justify-center items-center">
                 {openDropDown && <DropDown setDropDown={setDropDown} />}
                 <button onClick={() => { setDropDown(true) }}>
-                    <div className="user-container flex justify-center items-center gap-2 p-2" key={user.id}>
+                    {user?.img && <div className="user-container flex justify-center items-center gap-2 p-2" key={user.id}>
                         <div>
                             <img src={`${user.img}`} alt="background-img" />
                         </div>
                         <div className="flex gap-2">
-                        <p>{user.email}</p>
-                        {openDropDown ? <FontAwesomeIcon icon={faArrowUp}/> : <FontAwesomeIcon icon={faArrowDown}/>}
-                    </div>
-                    </div>
+                            <p>{user.email}</p>
+                            {openDropDown ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />}
+                        </div>
+                    </div>}
                 </button>
             </div>
         </div>
