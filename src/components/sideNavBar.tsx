@@ -6,6 +6,7 @@ import { HandleDelete } from "../Helper/handleDelete";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { DropDown } from "./dropDown";
+import { LoginPage } from "./loginPage";
 
 export const SideNavBar = () => {
 
@@ -15,6 +16,10 @@ export const SideNavBar = () => {
 
 
     console.log(folder);
+
+    if(!user){
+        return <LoginPage/>
+    }
 
     return (
         <div className="w-96 flex flex-col justify-between text-textColor overflow-y-scroll">
@@ -47,7 +52,7 @@ export const SideNavBar = () => {
             <div className="profile-container relative flex justify-center items-center">
                 {openDropDown && <DropDown setDropDown={setDropDown} />}
                 <button onClick={() => { setDropDown(true) }}>
-                    {user?.img && <div className="user-container flex justify-center items-center gap-2 p-2" key={user.id}>
+                    <div className="user-container flex justify-center items-center gap-2 p-2" key={user.id}>
                         <div>
                             <img src={`${user.img}`} alt="background-img" />
                         </div>
@@ -55,7 +60,7 @@ export const SideNavBar = () => {
                             <p>{user.email}</p>
                             {openDropDown ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />}
                         </div>
-                    </div>}
+                    </div>
                 </button>
             </div>
         </div>
