@@ -4,7 +4,7 @@ import { FolderCollectionContext } from "../context/folderCollectionContext"
 import { UserInfoContext } from "../context/userInfoContext";
 import { HandleDelete } from "../Helper/handleDelete";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { DropDown } from "./dropDown";
 
 export const SideNavBar = () => {
@@ -47,11 +47,14 @@ export const SideNavBar = () => {
             <div className="relative flex justify-center items-center">
                 {openDropDown && <DropDown setDropDown={setDropDown} />}
                 <button onClick={() => { setDropDown(true) }}>
-                    <div className="user-container flex justify-center gap-2 p-2" key={user.id}>
+                    <div className="user-container flex justify-center items-center gap-2 p-2" key={user.id}>
                         <div>
-                            <img className="w-7" src={`${user.img}`} alt="background-img" />
+                            <img src={`${user.img}`} alt="background-img" />
                         </div>
-                        <div>{user.email}</div>
+                        <div className="flex gap-2">
+                        <p>{user.email}</p>
+                        {openDropDown ? <FontAwesomeIcon icon={faArrowUp}/> : <FontAwesomeIcon icon={faArrowDown}/>}
+                    </div>
                     </div>
                 </button>
             </div>
