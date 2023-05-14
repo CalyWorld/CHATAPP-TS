@@ -2,15 +2,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSignOut } from "@fortawesome/free-solid-svg-icons"
 import { useContext } from "react"
 import { UserInfoContext } from "../context/userInfoContext"
-import auth from "../firebase"
+import auth from "../firebase";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 export const SignOut = () => {
 
     const { setUser } = useContext(UserInfoContext);
-
+    const naviagte = useNavigate();
     const handleSignOut = async () => {
         try {
             await auth.signOut();
-            setUser({ email: "", img: "", id: "" });
+            Cookies.remove("userInfo");
+            setUser(null);
+            naviagte("/");
         } catch (error) {
             console.log(error);
         }
