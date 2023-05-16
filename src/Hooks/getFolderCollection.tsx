@@ -1,26 +1,40 @@
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { useContext, useEffect } from "react";
-import { FolderCollection, FolderCollectionContext } from "../context/folderCollectionContext";
-
+import { db } from "../firebase";
+import { FolderCollectionContext, FolderCollection } from "../context/folderCollectionContext";
 
 export const useGetFolderCollection = () => {
-  const { folder, setFolder } = useContext(FolderCollectionContext);
+  const { setFolder } = useContext(FolderCollectionContext);
 
-  console.log(folder);
+
   useEffect(() => {
     const fetchFolderCollection = async () => {
       try {
-        const getFolderCollection = collection(db, "folderCollection");
-        const querySnapshot = await getDocs(getFolderCollection);
-        const folder: Array <FolderCollection> = [];
-        querySnapshot.forEach((doc)=> folder.push(doc.data() as FolderCollection));
+        const folderCollectionRef = collection(db, "folderCollection");
+        //arrange collection by descending order
+        const orderedFolderCollectionQuery = query(folderCollectionRef, orderBy("timeStamp", "desc"));
+        const querySnapshot = await getDocs(orderedFolderCollectionQuery);
+        const folder: FolderCollection[] = querySnapshot.docs.map((doc) => {
+          // Store the document ID in a separate variable
+          const folderId = doc.id;
+
+          // Create the FolderCollection object with the document ID included
+          return {
+            id: folderId,
+            message: doc.data().message,
+            currentId: doc.data().currentId,
+            collection: doc.data().collection,
+          } as FolderCollection;
+        });
+
         setFolder(folder);
+        console.log(folder);
       } catch (error) {
         console.log(error);
       }
     };
 
-    return () => {fetchFolderCollection()};
-  }, []);
+    return ()=>{fetchFolderCollection()};
+  }, [setFolder]); // Include setFolder in the dependency array
+
 };
