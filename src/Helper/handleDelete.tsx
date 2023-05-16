@@ -2,7 +2,9 @@ import { useContext} from "react"
 import { FolderCollectionContext } from "../context/folderCollectionContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { collection, deleteDoc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
+import { db } from "../firebase";
 
 interface HandleDeleteProps {
     id: string
@@ -10,11 +12,16 @@ interface HandleDeleteProps {
 export const HandleDelete = ({ id }: HandleDeleteProps) => {
 
     const { setFolder } = useContext(FolderCollectionContext);
-    const navigate = useNavigate();
 
-    const handleClick = () => {
-        setFolder((folder) => folder.filter((eachCollection) => eachCollection.id !== id));
-        navigate("/");
+    const handleClick = async () => {
+        try{
+            await deleteDoc(doc(collection(db, "folderCollection"), id));
+            setFolder((folder) => folder.filter((eachCollection) => eachCollection.id !== id));
+
+        }catch(error){
+            console.log(error);
+        }
+        // setFolder((folder) => folder.filter((eachCollection) => eachCollection.id !== id));
     }
 
     return (
