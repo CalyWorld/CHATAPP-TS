@@ -1,4 +1,4 @@
-import { useContext,useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { db } from "../firebase";
 import { ChatMessageCollection } from "../context/chatMessageContext";
 import { InputMessageContext } from "../context/inputContext";
@@ -10,8 +10,9 @@ import { LoadingContext } from "../context/loaderContext";
 import { useNavigate } from "react-router-dom";
 import "../components/CHAT/miniCard/loading.css";
 import { renderLoadingAnimation } from "../components/CHAT/miniCard/renderLoadingAnimation";
-import { collection, addDoc, doc, getDoc, setDoc, query, orderBy, getDocs } from "firebase/firestore";
-import { FolderCollection,FolderCollectionContext } from "../context/folderCollectionContext";
+import { collection, addDoc, doc, getDoc, setDoc} from "firebase/firestore";
+import { FolderCollectionContext } from "../context/folderCollectionContext";
+import { fetchFolderCollection } from "../Hooks/getFolderCollection";
 type HandleSubmitProps = {
     id?: string
 }
@@ -25,41 +26,12 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
 
     const { input, setInput } = useContext(InputMessageContext);
     const { loading, setLoading } = useContext(LoadingContext);
-    const {folder, setFolder} = useContext(FolderCollectionContext);
-    const navigate = useNavigate();
+    const { setFolder } = useContext(FolderCollectionContext);
     const loadingAnimation = renderLoadingAnimation();
 
-
-  useEffect(() => {
-    const fetchFolderCollection = async () => {
-      try {
-        const folderCollectionRef = collection(db, "folderCollection");
-        //arrange collection by descending order
-        const orderedFolderCollectionQuery = query(folderCollectionRef, orderBy("timeStamp", "desc"));
-        const querySnapshot = await getDocs(orderedFolderCollectionQuery);
-        const folder: FolderCollection[] = querySnapshot.docs.map((doc) => {
-          // Store the document ID in a separate variable
-          const folderId = doc.id;
-
-          // Create the FolderCollection object with the document ID included
-          return {
-            id: folderId,
-            message: doc.data().message,
-            currentId: doc.data().currentId,
-            collection: doc.data().collection,
-          } as FolderCollection;
-        });
-
-        setFolder(folder);
-        console.log(folder);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    
-  }, [setFolder]); // Include setFolder in the dependency array
-
-  console.log(folder);
+    useEffect(() => {
+        fetchFolderCollection(setFolder);
+    }, [setFolder]);
 
     const fetchMessage = async (): Promise<void> => {
 
@@ -92,13 +64,12 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
             inputCollection.response = responseList
             await AddNewChat(inputCollection, input);
             setLoading(true);
+            fetchFolderCollection(setFolder);
 
         } catch (err) {
             console.error("Error making API request:", err);
         }
     }
-
-    fetch
 
     const AddNewChat = async (inputCollection: ChatMessageCollection, input: DefaultInput): Promise<void> => {
         try {
