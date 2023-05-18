@@ -4,6 +4,7 @@ export interface FolderCollection {
     id: string,
     message: string,
     currentId:string,
+    timeStamp: number
     collection: {
         message: string,
         response: string,

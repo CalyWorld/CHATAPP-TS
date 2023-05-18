@@ -2,7 +2,7 @@ import React from "react";
 import { HandleSubmit } from "../../Helper/handleSubmit";
 import { HandleChange } from "../../Helper/handleChange";
 import { Footer } from "../footer";
-import { MiniCard } from "./miniCard";
+import { MiniCard } from "./miniCard/miniCard";
 
 export type CardProps = {
     collections: { message: string; response: string; id: string}[]
@@ -12,7 +12,7 @@ export type CardProps = {
 export const Card = ({ collections, id }: CardProps) => {
 
     const currentId = collections[collections.length-1].id;
-
+    // console.log("currentId", currentId)
     return (
         <div id="chat-container" className="w-screen h-screen bg-backgroundColor text-textColor flex flex-col justify-between overflow-y-scroll">
             <div className="flex flex-col">

@@ -5,8 +5,8 @@ import { ChatMessageCollection, ChatMessageContext } from './context/chatMessage
 import { InputMessageContext } from './context/inputContext';
 import { FolderCollection, FolderCollectionContext } from './context/folderCollectionContext';
 import { LoadingContext } from './context/loaderContext';
-import { LoginPage } from './components/loginPage';
 import { UserInfoCollection, UserInfoContext } from './context/userInfoContext';
+import { LoginPage } from './components/loginPage';
 
 function App() {
 
@@ -14,23 +14,20 @@ function App() {
   const [input, setInput] = useState<DefaultInput>({ message: "", id: "" });
   const [folder, setFolder] = useState<FolderCollection[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [user, setUser] = useState<UserInfoCollection>({email:"", img:"", id:""})
-
-  console.log(user);
-
+  const [user, setUser] = useState<UserInfoCollection | null>(null);
   return (
     <div>
-      <UserInfoContext.Provider value={{user, setUser}}>
+      <UserInfoContext.Provider value={{ user, setUser }}>
         <InputMessageContext.Provider value={{ input, setInput }}>
           <ChatMessageContext.Provider value={{ chatMessage, setChatMessage }}>
-            <LoadingContext.Provider value={{loading, setLoading}}>
-            <FolderCollectionContext.Provider value={{folder, setFolder}}>
-              <LoginPage/>
-            </FolderCollectionContext.Provider>
+            <LoadingContext.Provider value={{ loading, setLoading }}>
+              <FolderCollectionContext.Provider value={{ folder, setFolder }}>
+                <LoginPage />
+              </FolderCollectionContext.Provider>
             </LoadingContext.Provider>
           </ChatMessageContext.Provider>
         </InputMessageContext.Provider>
-        </UserInfoContext.Provider>
+      </UserInfoContext.Provider>
     </div>
   );
 }

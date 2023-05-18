@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext,useEffect } from "react";
 import { db } from "../firebase";
 import { ChatMessageCollection } from "../context/chatMessageContext";
 import { InputMessageContext } from "../context/inputContext";
@@ -10,8 +10,8 @@ import { LoadingContext } from "../context/loaderContext";
 import { useNavigate } from "react-router-dom";
 import "../components/CHAT/miniCard/loading.css";
 import { renderLoadingAnimation } from "../components/CHAT/miniCard/renderLoadingAnimation";
-import { collection, addDoc, doc, getDoc, setDoc } from "firebase/firestore";
-import { useGetFolderCollection } from "../Hooks/getFolderCollection";
+import { collection, addDoc, doc, getDoc, setDoc, query, orderBy, getDocs } from "firebase/firestore";
+import { FolderCollection,FolderCollectionContext } from "../context/folderCollectionContext";
 type HandleSubmitProps = {
     id?: string
 }
@@ -25,15 +25,49 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
 
     const { input, setInput } = useContext(InputMessageContext);
     const { loading, setLoading } = useContext(LoadingContext);
+    const {folder, setFolder} = useContext(FolderCollectionContext);
     const navigate = useNavigate();
     const loadingAnimation = renderLoadingAnimation();
 
-    //  if (!input) {
-    //         console.error("Please enter a prompt");
-    //         return;
-    //     }
+
+  useEffect(() => {
+    const fetchFolderCollection = async () => {
+      try {
+        const folderCollectionRef = collection(db, "folderCollection");
+        //arrange collection by descending order
+        const orderedFolderCollectionQuery = query(folderCollectionRef, orderBy("timeStamp", "desc"));
+        const querySnapshot = await getDocs(orderedFolderCollectionQuery);
+        const folder: FolderCollection[] = querySnapshot.docs.map((doc) => {
+          // Store the document ID in a separate variable
+          const folderId = doc.id;
+
+          // Create the FolderCollection object with the document ID included
+          return {
+            id: folderId,
+            message: doc.data().message,
+            currentId: doc.data().currentId,
+            collection: doc.data().collection,
+          } as FolderCollection;
+        });
+
+        setFolder(folder);
+        console.log(folder);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    
+  }, [setFolder]); // Include setFolder in the dependency array
+
+  console.log(folder);
 
     const fetchMessage = async (): Promise<void> => {
+
+
+        if (!input) {
+            console.error("Please enter a prompt");
+            return;
+        }
 
         setLoading(false);
         let inputCollection = { message: input.message, response: "", id: uuidv4() };
@@ -56,7 +90,7 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
             const data = await response.json();
             const responseList = data.choices[0].message.content;
             inputCollection.response = responseList
-            await addNewChat(inputCollection, input);
+            await AddNewChat(inputCollection, input);
             setLoading(true);
 
         } catch (err) {
@@ -64,10 +98,12 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
         }
     }
 
-    const addNewChat = async (inputCollection: ChatMessageCollection, input: DefaultInput): Promise<void> => {
+    fetch
+
+    const AddNewChat = async (inputCollection: ChatMessageCollection, input: DefaultInput): Promise<void> => {
         try {
             const newFolderDocRef = collection(db, "folderCollection");
-            const newFolder = { id: "", message: input.message, currentId: "", collection: [inputCollection] };
+            const newFolder = { id: "", message: input.message, currentId: "", timeStamp: new Date().getTime(), collection: [inputCollection] };
 
             //if id doesn't exist, create a new doc
             if (!id) {
@@ -89,15 +125,13 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
                     await setDoc(folderDocRef, { ...existingData, collection: updatedCollection });
                 }
             }
-            //navigate to the created input 
-            navigate(`/${newFolder.message}`);
+            //still working on navigating to the created input 
+            // navigate(`/${newFolder.id}`);
         } catch (error) {
             console.log(error);
         }
-        // useGetFolderCollection();
     };
-    //gets the collection after user clicks handleSubmit
-    useGetFolderCollection();
+
 
     return (
         <div>

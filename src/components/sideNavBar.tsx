@@ -6,20 +6,13 @@ import { HandleDelete } from "../Helper/handleDelete";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { DropDown } from "./dropDown";
-import { LoginPage } from "./loginPage";
+import { faMessage } from "@fortawesome/free-regular-svg-icons";
 
 export const SideNavBar = () => {
 
     const { folder } = useContext(FolderCollectionContext);
     const { user } = useContext(UserInfoContext);
     const [openDropDown, setDropDown] = useState<boolean>(false);
-
-
-    console.log(folder);
-
-    if(!user){
-        return <LoginPage/>
-    }
 
     return (
         <div className="w-96 flex flex-col justify-between text-textColor overflow-y-scroll">
@@ -31,12 +24,13 @@ export const SideNavBar = () => {
                         </button>
                     </div>
                 </Link>
-                <div className="saved-chat-container p-2 flex flex-col justify-center gap-5">
-                    {folder.map((collections) =>
-                        <div key={collections.id}>
-                            <Link to={`/${collections.message}`}>
+                <div className="saved-chat-container p-5 flex flex-col justify-center gap-5">
+                    {folder.map((collections) => (
+                        <div key={collections.id} className="hover:bg-navChatBackground">
+                            <Link to={`/c/${collections.id}`}>
                                 <div className="main-container flex p-2 justify-around items-center">
-                                    <div className="chat-name-container">
+                                    <div className="chat-name-container flex items-center gap-2">
+                                        <FontAwesomeIcon icon={faMessage} />
                                         <p>{collections.message}</p>
                                     </div>
                                     <div className="buttons-container flex gap-2">
@@ -46,18 +40,18 @@ export const SideNavBar = () => {
                                 </div>
                             </Link>
                         </div>
-                    )}
+                    ))}
                 </div>
             </div>
             <div className="profile-container relative flex justify-center items-center">
                 {openDropDown && <DropDown setDropDown={setDropDown} />}
                 <button onClick={() => { setDropDown(true) }}>
-                    <div className="user-container flex justify-center items-center gap-2 p-2" key={user.id}>
+                    <div className="user-container flex justify-center items-center gap-2 p-5" key={user?.id}>
                         <div>
-                            <img src={`${user.img}`} alt="background-img" />
+                            <img src={`${user?.img}`} alt="background-img" className="w-7" />
                         </div>
                         <div className="flex gap-2">
-                            <p>{user.email}</p>
+                            <p>{user?.email}</p>
                             {openDropDown ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />}
                         </div>
                     </div>

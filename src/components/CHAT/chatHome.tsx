@@ -1,15 +1,10 @@
-import React, { useContext } from "react"
+import React from "react"
 import { HandleSubmit } from "../../Helper/handleSubmit";
 import { HandleChange } from "../../Helper/handleChange";
-import { FolderCollectionContext } from "../../context/folderCollectionContext";
 import { Footer } from "../footer";
 
 
 export const ChatHome = () => {
-
-    const { folder } = useContext(FolderCollectionContext);
-
-    console.log("folder", folder);
 
     return (
         <div id="chat-container" className="bg-backgroundColor text-textColor w-screen flex flex-col justify-around items-center gap-80">

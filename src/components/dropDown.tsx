@@ -10,7 +10,12 @@ interface DropDownProps {
 
 export const DropDown = ({ setDropDown }: DropDownProps) => {
 
-    const { setFolder } = useContext(FolderCollectionContext)
+    const { setFolder } = useContext(FolderCollectionContext);
+
+    const handleDeleteAllChats = () =>{
+        setFolder([]);
+        setDropDown(false);
+    }
 
     return (
         <div id="dropdown" className="absolute p-1 bottom-12 left-3 h-64 w-60 flex justify-start items-center bg-dropdownBackground text-dropdownText rounded-lg shadow w-44 dark:bg-gray-700" >
@@ -28,7 +33,7 @@ export const DropDown = ({ setDropDown }: DropDownProps) => {
                         <p>Settings</p></div>
                 </li>
                 <li className="flex justify-start p-2 w-full hover:bg-dropdownTextBackground">
-                    <div className="flex items-center gap-3" onClick={() => { setFolder([]) }}>
+                    <div className="flex items-center gap-3" onClick={() => {handleDeleteAllChats()}}>
                         <FontAwesomeIcon icon={faTrash} />
                         <p>Clear conversations</p>
                     </div>

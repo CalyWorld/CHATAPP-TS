@@ -12,7 +12,8 @@ module.exports = {
      "formbackground":"#f8fafc",
      "dropdownBackground": "#0f172a",
      "dropdownTextBackground":"#334155",
-     "buttonBaground": "#334155"
+     "buttonBaground": "#334155",
+     "navChatBackground":"#374151"
     },
   },
   plugins: [],

@@ -20,6 +20,7 @@ export const SignIn = () => {
         id: userInfo.id
       }), { expires: 29 });
       setUser(userInfo);
+      
     } catch (error) {
       console.log(error);
     }

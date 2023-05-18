@@ -15,7 +15,7 @@ export const HandleChange = () => {
 
 
     return (
-        <div className="w-full">
+        <div className="w-80">
             <input type="text" name="message" className="w-full bg-backgrounInput text-textColor p-1" placeholder="Message..." value={input.message} onChange={(e) => { handleChange(e) }} />
         </div>
     )
