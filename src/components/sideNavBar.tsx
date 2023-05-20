@@ -34,7 +34,7 @@ export const SideNavBar = () => {
                                         <p>{collections.message}</p>
                                     </div>
                                     <div className="buttons-container flex gap-2">
-                                        <FontAwesomeIcon icon={faPenToSquare} />
+                                        {/* <FontAwesomeIcon icon={faPenToSquare} /> */}
                                         <HandleDelete id={collections.id} />
                                     </div>
                                 </div>

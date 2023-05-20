@@ -14,7 +14,7 @@ export const ChatHome = () => {
                </div>
             </div>
             <div>
-            <div id="chat-message-container" className="flex justify-center item-center w-96 mb-8">
+            <div id="chat-message-container" className="flex justify-center item-center w-96 mb-8 gap-3">
                 <HandleChange />
                 <HandleSubmit />
             </div>

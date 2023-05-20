@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { DefaultInput } from "../context/inputContext";
 import { LoadingContext } from "../context/loaderContext";
-import { useNavigate } from "react-router-dom";
 import "../components/CHAT/miniCard/loading.css";
 import { renderLoadingAnimation } from "../components/CHAT/miniCard/renderLoadingAnimation";
 import { collection, addDoc, doc, getDoc, setDoc} from "firebase/firestore";
@@ -26,7 +25,7 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
 
     const { input, setInput } = useContext(InputMessageContext);
     const { loading, setLoading } = useContext(LoadingContext);
-    const { setFolder } = useContext(FolderCollectionContext);
+    const {  setFolder } = useContext(FolderCollectionContext);
     const loadingAnimation = renderLoadingAnimation();
 
     useEffect(() => {
@@ -34,7 +33,6 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
     }, [setFolder]);
 
     const fetchMessage = async (): Promise<void> => {
-
 
         if (!input) {
             console.error("Please enter a prompt");
@@ -61,10 +59,11 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
             const response = await fetch(API_URL, options);
             const data = await response.json();
             const responseList = data.choices[0].message.content;
-            inputCollection.response = responseList
+            inputCollection.response = responseList;
             await AddNewChat(inputCollection, input);
             setLoading(true);
             fetchFolderCollection(setFolder);
+            // navigate(`/c/${lastChatCollection}`)
 
         } catch (err) {
             console.error("Error making API request:", err);
@@ -79,6 +78,10 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
             //if id doesn't exist, create a new doc
             if (!id) {
                 await addDoc(newFolderDocRef, newFolder);
+                // let lastChatCollection = folder[0].id;
+                // console.log("current-collection", lastChatCollection);
+                // // navigate(`/c/${lastChatCollection}`);
+                // console.log(newFolder);
             } else {
 
                 //get the docRef for that specific id
@@ -94,6 +97,7 @@ export const HandleSubmit = ({ id }: HandleSubmitProps) => {
                     const existingCollection = existingData.collection;
                     const updatedCollection = [...existingCollection, inputCollection];
                     await setDoc(folderDocRef, { ...existingData, collection: updatedCollection });
+                    // navigate(`/c/${newFolder.id}`);
                 }
             }
             //still working on navigating to the created input 
