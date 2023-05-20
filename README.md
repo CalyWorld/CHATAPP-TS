@@ -14,5 +14,7 @@ Include your your .env file in your gitignore file
 NPM start. *to run the web-app* 
 
 #Images
-![Alt Text](https://drive.google.com/file/d/1u4h5_kQoe8SpMoeZVsr-2tPeU3_G1V-7/view?usp=share_link)
+[](
+<img width="1438" alt="Screenshot 2023-05-20 at 1 28 15 PM" src="https://github.com/CalyWorld/CHATGPT-CLONE-TS/assets/88979648/8fe8ed4a-ac0f-49ff-b493-193be4389f4e">
+url)
 
