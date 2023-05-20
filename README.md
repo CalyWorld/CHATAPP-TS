@@ -1,9 +1,9 @@
 # CHATGPT-CLONE-TS
 
-#Introduction
+Introduction
   for this project, i considered making a chatGPT clone where users can login, sign up if they don't have an account and also sign out
   
-#Installation Instructions
+Installation Instructions
 NPM install.  *to get your node modules*
 Create a .env file in your root folder, 
   ==============================================
