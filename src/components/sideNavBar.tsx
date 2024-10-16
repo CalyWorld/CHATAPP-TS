@@ -4,11 +4,7 @@ import { FolderCollectionContext } from "../context/folderCollectionContext";
 import { UserInfoContext } from "../context/userInfoContext";
 import { HandleDelete } from "../Helper/handleDelete";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPenToSquare,
-  faArrowDown,
-  faArrowUp,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { DropDown } from "./dropDown";
 import { faMessage } from "@fortawesome/free-regular-svg-icons";
 
